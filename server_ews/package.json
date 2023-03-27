@@ -1,0 +1,28 @@
+{
+  "name": "server_ews",
+  "version": "0.1.0",
+  "description": "Gundala early warning system",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chandrawi/EWS_POC.git"
+  },
+  "keywords": [
+    "ews"
+  ],
+  "author": "chandra wijaya sentosa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/chandrawi/EWS_POC/issues"
+  },
+  "homepage": "https://github.com/chandrawi/EWS_POC#readme",
+  "dependencies": {
+    "@gundala/api": "^1.2.2",
+    "@gundala/api-rmcs": "^1.0.3",
+    "date-fns": "^2.29.3"
+  }
+}

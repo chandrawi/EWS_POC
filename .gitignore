@@ -45,6 +45,10 @@ include/
 pip-log.txt
 pip-delete-this-directory.txt
 
+# Node JS
+node_modules/
+package-lock.json
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/tasks.json
