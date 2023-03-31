@@ -1,18 +1,19 @@
 import { Auth, setConfig, getResult, getStatus, saveToken } from "@gundala/api";
 import { DataCommon } from "@gundala/api-rmcs";
 import { format } from "date-fns";
+import axios from "axios";
 
 // API URL configuration
 const config = {
   url_auth : "https://api.gundala.co.id/auth",
   url_rmcs : "https://api.gundala.co.id/shms",
   url_shms : "https://api.gundala.co.id/shms"
-}
+};
 const application = "shms";
 setConfig(config);
 
 // Alert freeze time. Alert message only sent after freeze time passed
-let alert_freeze = 600000   // 600 seconds
+let alert_freeze = 600000;      // 600 seconds
 let alert_time_warning = new Date() - alert_freeze;
 let alert_time_danger = new Date() - alert_freeze;
 
@@ -45,6 +46,42 @@ async function guestLogin(application) {
         }
     }, 1000);
 }
+
+const sendWa = ({ text }) => {
+    let data = JSON.stringify({
+        sender: "ZAENAB1",
+        tags: "TEST",
+        messages: [
+            {
+                text,
+            },
+        ],
+        label: "Test 1",
+        userId: "hbinduni@gmail.com",
+    });
+
+    let config = {
+        method: "post",
+        maxBodyLength: Infinity,
+        url: "https://db.daisi.id/api/v1/wa/send",
+        headers: {
+            accept: "application/json",
+            "Content-Type": "application/json",
+            token:
+                "145b69ec0ca32211cc2b26ade9c17966ccca039aac98d15541ed02b766aec7e58711e4d7",
+        },
+        data: data,
+    };
+
+    axios
+        .request(config)
+        .then((response) => {
+            console.log(JSON.stringify(response.data));
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+};
 
 // Try to login for the first time
 await guestLogin(application);
@@ -83,19 +120,17 @@ let run = setTimeout(async function ews() {
     let now = new Date();
     if (status_danger && (now - alert_time_danger) > alert_freeze) {
         alert_time_danger = new Date();
-        status_danger = false;
 
         // Send danger alert message
         console.log("DANGER!!!");
-
+        sendWa({ text: "DANGER!!!" });
 
     } else if (status_warning && (now - alert_time_warning) > alert_freeze) {
         alert_time_warning = new Date();
-        status_warning = false;
 
         // Send warning alert message
         console.log("WARNING!!!");
-
+        sendWa({ text: "WARNING!!!" });
 
     }
 
